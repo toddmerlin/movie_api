@@ -262,7 +262,7 @@ app.post(
   }
 );
 
-// delete a user
+// delete a user from the database
 app.delete(
   "/users/:Username",
   passport.authenticate("jwt", { session: false }),
