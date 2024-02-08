@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Documentation</title>
+  </head>
+  <body>
+    <h3>
+      myFlix is a server-side web application, providing users with access to
+      information about differnt movies, actors, directors and their specific
+      genre. ENabling users to sign up, update their personal information and
+      create list of their favourite movies.
+    </h3>
+    <br />
+    <h4>Features</h4>
+    <ul>
+      <li>Return a list of ALL movies</li>
+      <li>
+        Return data i.e. description, genre, director, image URL about a single
+        movie by title
+      </li>
+      <li>Return data about a genre by name/title e.g. “Comedy”</li>
+      <li>
+        Return data about a director (bio, birth year, death year) by name
+      </li>
+      <li>Allow new users to register</li>
+      <li>Allow users to update their user info by their username</li>
+      <li>Allow users to add a movie to their list of favorites</li>
+      <li>Allow users to remove a movie from their list of favorites</li>
+      <li>Allow existing users to deregister</li>
+    </ul>
+
+    <br />
+    <br />
+    <h4>Table below details all elements of endpoints created in myFlix</h4>
+    <table class="table_1">
+      <tr>
+        <th>Business Logic</th>
+        <th>URL</th>
+        <th>Parameters in URL</th>
+        <th>HTTP Method</th>
+        <th>Request Data Format</th>
+        <th>Response Data Format</th>
+      </tr>
+
+      <tr>
+        <td>Return a list of ALL movies to the user</td>
+        <td>http://localhost:8080/movies</td>
+        <td>-</td>
+        <td>Get</td>
+        <td>-</td>
+        <td>JSON object holding data about all the movies</td>
+      </tr>
+
+      <tr>
+        <td>Return data about a single movie by title</td>
+        <td>http://localhost:8080/movies/:title</td>
+        <td>:title</td>
+        <td>Get</td>
+        <td>-</td>
+        <td>JSON object holding data about a single movie</td>
+      </tr>
+
+      <tr>
+        <td>Return data about a genre by title</td>
+        <td>http://localhost:8080/movies/genre/:genreName</td>
+        <td>:genreName</td>
+        <td>Get</td>
+        <td>-</td>
+        <td>JSON object holding data about a specific genre of moive</td>
+      </tr>
+      <tr>
+        <td>
+          Return data about a director including bio, birth year, death year by
+          their name
+        </td>
+        <td>http://localhost:8080/movies/Directors/:directorName</td>
+        <td>:directorName</td>
+        <td>Get</td>
+        <td>-</td>
+        <td>JSON object holding data about a specific director</td>
+      </tr>
+      <tr>
+        <td>Allow new users to register</td>
+        <td>http://localhost:8080/users</td>
+        <td>-</td>
+        <td>Post</td>
+        <td>
+          JSON object holding data about user to add, structured like: {
+          "userName" : "string" , "password" : "string" , "email" : "string" ,
+          "birthdate" : "date" }
+        </td>
+        <td>
+          JSON object holding data about user that was added, structured like: {
+          "userName" : "Nathan" , "password" : "Backbone" , "email" :
+          "nahan@hotmail.com" , "birthdate" : "1980-06-11" , "favouriteMovies" :
+          [] , "_id" : "6400..."
+        </td>
+      </tr>
+      <tr>
+        <td>Allow users to update their user info via username</td>
+        <td>http://localhost:8080/users/:userName</td>
+        <td>:username</td>
+        <td>Put</td>
+        <td>-</td>
+        <td>JSON object holding data about the updated user information</td>
+      </tr>
+      <tr>
+        <td>Allow users to add a movie to their list of favorites</td>
+        <td>http://localhost:8080/users/:userName/movies/:movieId</td>
+        <td>:userName, :movieId</td>
+        <td>Post</td>
+        <td>-</td>
+        <td>
+          JSON object holding data about the user and the movie that was added
+        </td>
+      </tr>
+      <tr>
+        <td>Allow users to remove a movie from their list of favorites</td>
+        <td>http://localhost:8080/users/:userName/movies/:movieId</td>
+        <td>id / movieTitle:userName, :movieId</td>
+        <td>Delete</td>
+        <td>-</td>
+        <td>
+          JSON object holding data about the user with the movie now removed
+        </td>
+      </tr>
+      <tr>
+        <td>Allow existing users to deregister</td>
+        <td>http://localhost:8080/users/:userName</td>
+        <td>:userName</td>
+        <td>Delete</td>
+        <td>-</td>
+        <td>Text describing user being removed</td>
+      </tr>
+    </table>
+  </body>
+</html>
