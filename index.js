@@ -19,7 +19,7 @@ app.use(bodyParser.json());
 const cors = require("cors");
 app.use(cors());
 
-let auth = require("./auth")(app);
+const auth = require("./auth")(app);
 // use of app here ensures Express is available in auth.js as well
 
 const passport = require("passport");
@@ -324,87 +324,3 @@ const port = process.env.PORT || 8080;
 app.listen(port, "0.0.0.0", () => {
   console.log("Listening on Port " + port);
 });
-
-// let movies = [
-//   {
-//     title: "Tommy Boy",
-//     description: "A drama about a woman who falls in love with a boy",
-//     director: "Peter Segal",
-//     genre: "Comedy",
-//     image: "Tommyboy.jpeg",
-//     id: uuid.v4(),
-//   },
-//   {
-//     title: "Office Space",
-//     description: "A drama about a woman who falls in love with a boy",
-//     director: "Mike Judge",
-//     genre: "Comedy",
-//     image: "OfficeSpace.jpeg",
-//     id: uuid.v4(),
-//   },
-//   {
-//     title: "Elf",
-//     description: "A drama about a woman who falls in love with a boy",
-//     director: "Jon Favreau",
-//     genre: "Christmas",
-//     image: "Elf.jpeg",
-//     id: uuid.v4(),
-//   },
-//   {
-//     title: "Die Hard",
-//     description: "A drama about a woman who falls in love with a boy",
-//     director: "John McTiernan",
-//     genre: "Christmas",
-//     image: "Diehard.jpeg",
-//     id: uuid.v4(),
-//   },
-//   {
-//     title: "Nightmare on Elm Street",
-//     description: "A drama about a woman who falls in love with a boy",
-//     director: "Wes Craven",
-//     genre: "Horror",
-//     image: "Nightmare.jpeg",
-//     id: uuid.v4(),
-//   },
-//   {
-//     title: "Nope",
-//     description: "A drama about a woman who falls in love with a boy",
-//     director: "Jordan Peele",
-//     genre: "Horror",
-//     image: "Nope.jpeg",
-//     id: uuid.v4(),
-//   },
-//   {
-//     title: "The Godfather",
-//     description: "A drama about a woman who falls in love with a boy",
-//     director: "Francis Ford Coppola",
-//     genre: "Drama",
-//     image: "Godfather.jpeg",
-//     id: uuid.v4(),
-//   },
-//   {
-//     title: "The Notebook",
-//     description: "A drama about a woman who falls in love with a boy",
-//     director: "Nick Cassavetes",
-//     genre: "Drama",
-//     image: "Notebook.jpeg",
-//     id: uuid.v4(),
-//   },
-
-//   {
-//     title: "Terminator 2",
-//     description: "A drama about a woman who falls in love with a boy",
-//     director: "James Cameron",
-//     genre: "Action",
-//     image: "Terminator2.jpeg",
-//     id: uuid.v4(),
-//   },
-//   {
-//     title: "Avatar",
-//     description: "A drama about a woman who falls in love with a boy",
-//     director: "James Cameron",
-//     genre: "Action",
-//     image: "Avatar.jpeg",
-//     id: uuid.v4(),
-//   },
-// ];
