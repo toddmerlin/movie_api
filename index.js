@@ -68,14 +68,18 @@ app.get(
   "/movies",
   // passport.authenticate("jwt", { session: false }),
   async (req, res) => {
-    await Movies.find({}, "Title") // Only fetch the 'Title' field
-      .then((movies) => {
-        const movieTitles = movies.map((movie) => movie.Title);
-        res.json(movieTitles);
-      })
-      .catch((err) => {
-        console.error("Error fetching movies:", err);
-        res.status(500).send("Error fetching movies" + err);
+    // To fetch all movies
+    await Movies.find()
+      // To only fetch movie titles only it'd be
+      // await Movies.find({}, "Title") // Only fetch the 'Title' field
+      // .then((movies) => {
+      //   const movieTitles = movies.map((movie) => movie.Title);
+      //   res.json(movieTitles);
+      // })
+      .then((movies) => res.send(movies))
+      .catch((error) => {
+        console.error("Error fetching movies:", error);
+        res.status(500).send("Error fetching movies" + error);
       });
   }
 );

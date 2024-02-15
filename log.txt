@@ -223,3 +223,8 @@
 ::1 - - [08/Feb/2024:01:14:48 +0000] "PUT /users/Pamela HTTP/1.1" 401 - "-" "PostmanRuntime/7.32.1"
 ::1 - - [08/Feb/2024:01:18:32 +0000] "PUT /users/Pamela HTTP/1.1" 422 94 "-" "PostmanRuntime/7.32.1"
 ::1 - - [08/Feb/2024:01:19:04 +0000] "PUT /users/Pamela HTTP/1.1" 200 172 "-" "PostmanRuntime/7.32.1"
+127.0.0.1 - - [15/Feb/2024:05:49:27 +0000] "GET /movies HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36"
+127.0.0.1 - - [15/Feb/2024:05:49:28 +0000] "GET /favicon.ico HTTP/1.1" 404 150 "http://localhost:8080/movies" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36"
+127.0.0.1 - - [15/Feb/2024:05:49:30 +0000] "GET /movies HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36"
+127.0.0.1 - - [15/Feb/2024:05:49:43 +0000] "GET /movies HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36"
+127.0.0.1 - - [15/Feb/2024:05:50:41 +0000] "GET /movies HTTP/1.1" 200 4907 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36"
