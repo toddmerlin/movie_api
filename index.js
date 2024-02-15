@@ -77,9 +77,9 @@ app.get(
       //   res.json(movieTitles);
       // })
       .then((movies) => res.send(movies))
-      .catch((err) => {
-        console.error("Error fetching movies:", err);
-        res.status(500).send("Error fetching movies" + err);
+      .catch((error) => {
+        console.error("Error fetching movies:", error);
+        res.status(500).send("Error fetching movies" + error);
       });
   }
 );
