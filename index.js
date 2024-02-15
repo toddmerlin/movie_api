@@ -66,7 +66,7 @@ app.get("/documentation", (req, res) => {
 // get a list of movies
 app.get(
   "/movies",
-  passport.authenticate("jwt", { session: false }),
+  // passport.authenticate("jwt", { session: false }),
   async (req, res) => {
     await Movies.find({}, "Title") // Only fetch the 'Title' field
       .then((movies) => {
