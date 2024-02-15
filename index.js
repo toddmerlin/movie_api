@@ -291,6 +291,17 @@ app.delete(
   }
 );
 
+// remove a movie from the database
+app.delete("/movies/:Title", async (req, res) => {
+  Movies.findOneAndDelete({ Title: req.params.Title }).then((movie) => {
+    if (!movie) {
+      res.status(400).send(req.params.Title + " was not found.");
+    } else {
+      res.status(200).send(req.params.Title + " was deleted.");
+    }
+  });
+});
+
 // allow users to remove a movie from their favorite list
 app.delete(
   "/users/:Username/movies/:MovieID",
