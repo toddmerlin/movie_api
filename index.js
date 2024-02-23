@@ -131,17 +131,37 @@ app.get("/movies/director/:director", (req, res) => {
     });
 });
 
-// // return list of users
-// app.get("/users", (req, res) => {
-//   Users.find()
-//     .then((users) => {
-//       res.status(201).json(users);
-//     })
-//     .catch((err) => {
-//       console.error(err);
-//       res.status(500).send("Error: " + err);
-//     });
-// });
+// return list of users
+app.get("/users", (req, res) => {
+  Users.find()
+    .then((users) => {
+      res.status(201).json(users);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send("Error: " + err);
+    });
+});
+
+// Retrive a list of user's list of favorites
+app.get(
+  "/users/:Username/favoriteMovies",
+  // passport.authenticate("jwt", { session: false })
+  (req, res) => {
+    Users.findOne({ Username: req.params.Username })
+      .then((user) => {
+        if (!user) {
+          res.status(400).send(req.params.Username + " was not found.");
+        } else {
+          res.status(200).json(user.FavoriteMovies);
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        res.status(500).send("Error: " + err);
+      });
+  }
+);
 
 // allow new users to register
 app.post(
