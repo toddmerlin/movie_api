@@ -1,20 +1,17 @@
-// Import required modules: 'http' for creating an HTTP server,
-// 'fs' for file system operations, and 'url' for URL parsing.
-const http = require("http"),
-  fs = require("fs"),
-  url = require("url");
+const http = require("http");
+const fs = require("fs");
+const url = require("url");
+const passport = require("passport");
 
-//The require() function allows addition of a module. First pass the module into function as its argument. Then set that whole function to a variable in your code
+// Include your authentication middleware
+require("./passport");
 
-// Create an HTTP server using the 'http' module.
 http
   .createServer((request, response) => {
-    // Extract the requested URL from the request.
     let addr = request.url,
       q = new URL(addr, "http://" + request.headers.host),
       filePath = "";
 
-    // Append the request details to a log file ('log.txt').
     fs.appendFile(
       "log.txt",
       "URL: " + addr + "\nTimestamp: " + new Date() + "\n\n",
@@ -27,8 +24,31 @@ http
       }
     );
 
-    // Determine the file path based on the pathname in the URL.
-    if (q.pathname.includes("documentation")) {
+    // Define routes and handle API requests
+    if (q.pathname === "/login" && request.method === "POST") {
+      // Use passport middleware to handle authentication
+      passport.authenticate(
+        "local",
+        { session: false },
+        (error, user, info) => {
+          if (error || !user) {
+            // Handle authentication failure
+            return response.status(400).json({
+              message: error ? error.message : "Incorrect username or password",
+            });
+          }
+          // Handle authentication success
+          req.login(user, { session: false }, (error) => {
+            if (error) {
+              return response.status(500).send(error);
+            }
+            // Generate JWT token and send response
+            let token = generateJWTToken(user.toJSON());
+            return response.json({ user, token });
+          });
+        }
+      )(request, response);
+    } else if (q.pathname === "/documentation") {
       filePath = __dirname + "/documentation.html";
     } else {
       filePath = "index.html";
