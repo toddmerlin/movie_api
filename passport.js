@@ -23,6 +23,7 @@ passport.use(
       try {
         const user = await Users.findOne({ Username: username });
         if (!user) {
+          console.log("User not found"); // Log the message
           return callback(null, false, { message: "User not found" });
         }
         if (!user.validatePassword(password)) {
