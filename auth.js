@@ -24,9 +24,10 @@ module.exports = (router) => {
           return res.status(400).json({
             message: info.message,
           });
-        } else if (info && info.message === "No such user") {
+        } else if (info && info.message === "User not found") {
+          console.log("User not found:", info.message); // Log the message
           return res.status(400).json({
-            message: info.message,
+            message: info.message, // Send the correct message to the client
           });
         } else {
           return res.status(400).json({
