@@ -236,12 +236,16 @@ app.put(
     if (req.user.Username !== req.params.Username) {
       return res.status(401).send("Unauthorized");
     }
+
+    // Hash the password
+    let hashedPassword = Users.hashedPassword(req.body.Password);
+
     await Users.findOneAndUpdate(
       { Username: req.params.Username },
       {
         $set: {
           Username: req.body.Username,
-          Password: req.body.Password,
+          Password: hashedPassword,
           Email: req.body.Email,
           Birthday: req.body.Birthday,
         },
