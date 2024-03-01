@@ -28,7 +28,7 @@ const userSchema = mongoose.Schema({
 });
 
 // define methods to hash passwords
-userSchema.statics.hashedPassword = (password) => {
+userSchema.statics.hashedPassword = function (password) {
   return bcrypt.hashSync(password, 10);
 };
 
@@ -37,8 +37,8 @@ userSchema.methods.validatePassword = function (password) {
 };
 
 // Once defined, create models that use the schemas you’ve defined
-let Movie = mongoose.model("Movie", movieSchema);
-let User = mongoose.model("User", userSchema);
+const Movie = mongoose.model("Movie", movieSchema);
+const User = mongoose.model("User", userSchema);
 
 module.exports.Movie = Movie;
 module.exports.User = User;
