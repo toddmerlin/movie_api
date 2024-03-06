@@ -269,14 +269,14 @@ app.put(
 
 // allow users to add a movie to their favorite list
 app.post(
-  "/users/:Username/movies/:MovieID",
+  "/users/:Username/movies/:Title",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
-    console.log(req.params.Username, req.params.MovieID);
+    console.log(req.params.Username, req.params.Title);
     Users.findOneAndUpdate(
       { Username: req.params.Username },
       {
-        $push: { FavoriteMovies: req.params.MovieID },
+        $push: { FavoriteMovies: req.params.Title },
       },
       { new: true }
     )
