@@ -1,36 +1,69 @@
-# myFlix-client
+# myFlix Web Application Server-Side Component - API
 
-## Objective
-Using React, build the client-side for an app called myFlix based on its
-existing server-side code - REST API and database.
+## Description
 
-## Requirements
-- Single-page application (SPA)
-- State routing to navigate between views and share URLs
-- Search feature for users to filter selections using React Redux
-- Parcel as its build tool
-- React library and in ES2015+
-Bootstrap as a UI library for styling and responsiveness
-React Redux for state management
+The server-side component of the myFlix web application aims to provide users with access to a vast array of information about movies, directors, and genres. Users can register, update their personal information, and create a list of their favorite movies. This component serves as the backbone of the application, facilitating data retrieval, user management, and interaction with the database.
 
-## Features:
-### Main view
-- Returns ALL movies to the user (each movie item with an image, title, and description)
-- Filtering the list of movies with a “search” feature
-- Ability to select a movie for more details
-- Ability to log out
-- Ability to navigate to Profile view
-### Single Movie view
-- Returns data (description, genre, director, image) about a single movie to the user
-- Allows users to add a movie to their list of favorites
-### Login view
-- Allows users to log in with a username and password
-### Signup view
-- Allows new users to register (username, password, email, date of birth)
-### Profile view
-- Displays user registration details
-- Allows users to update their info (username, password, email, date of birth)
-- Displays favorite movies
-- Allows users to remove a movie from their list of favorites
-- Filtering the list of movies with a “search” feature
-- Allows existing users to deregister
+## Project dependencies
+
+- bcrypt
+- body-parser
+- cors
+- express
+- express-validator
+- jsonwebtoken
+- lodash
+- mongoose
+- morgan
+- passport
+- passport-jwt
+- passport-local
+- uuid
+
+## Context
+
+In today's web development landscape, proficiency in both frontend and backend technologies is crucial. The myFlix server-side component, built using JavaScript, Node.js, Express, and MongoDB, offers a comprehensive REST API for frontend developers to integrate into the client-side of the application. Additionally, it caters to movie enthusiasts who seek detailed insights into their favorite films, directors, and genres.
+
+## Design Criteria
+
+User Stories
+Receive Information: Users want to access data on movies, directors, and genres to enhance their movie knowledge.
+Create Profile: Users aim to create profiles to save data about their favorite movies.
+
+## Features
+
+Retrieve a host of data for all movies
+Retrieve data about a single movie by title
+Retrieve data about a genre by name
+Retrieve data about a director by name
+Allow new users to register
+Allow users to update their user information
+Allow users to add and remove movies from their favorites
+Allow existing users to deregister
+
+## Technical Requirements
+
+Built with Node.js and Express.
+Adheres to REST architecture.
+Utilizes middleware modules like body-parser and morgan.
+Includes a "package.json" file.
+Database built using MongoDB with Mongoose.
+Provides movie information in JSON format.
+Error-free JavaScript code.
+Tested in Postman.
+Implements user authentication, authorization, and data validation.
+Complies with data security regulations.
+Deployable source code.
+
+## Link to app
+
+Hosted on Netlify: https://berriesmyflix.netlify.app/
+
+## Set up this App
+
+- Clone this repository
+- Navigate to the movie_api-client folder and run `npm install`
+- Run `parcel for styling and responsiveness
+  React Redux for state management
+
+This server-side component forms the foundation of the myFlix web application, empowering users to explore the fascinating world of movies with ease and efficiency.
