@@ -116,20 +116,20 @@ app.get("/documentation", (req, res) => {
   res.sendFile("/public/documentation.html", { root: __dirname });
 });
 
-// get a list of movies
+/**
+ * Route for returning the data for all movies.
+ * @name GET /movies
+ * @function
+ * @memberof module:server
+ * @param {Object} req - Express request object.
+ * @param {Object} res - Express response object.
+ */
 app.get(
   "/movies",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
-    // To fetch all movies
     await Movies.find()
-      // To only fetch movie titles only it'd be
-      // await Movies.find({}, "Title") // Only fetch the 'Title' field
-      // .then((movies) => {
-      //   const movieTitles = movies.map((movie) => movie.Title);
-      //   res.json(movieTitles);
-      // })
-      .then((movies) => res.send(movies))
+      .then((movies) => res.status(200).json(movies))
       .catch((error) => {
         console.error("Error fetching movies:", error);
         res.status(500).send("Error fetching movies" + error);
@@ -137,7 +137,15 @@ app.get(
   }
 );
 
-// return data about a single movie by title
+/**
+ * Route for returning data about a single movie by its title.
+ * @name GET /movies/:title
+ * @function
+ * @memberof module:server
+ * @param {string} title - The title of the movie.
+ * @param {Object} req - Express request object.
+ * @param {Object} res - Express response object.
+ */
 app.get(
   "/movies/:title",
   passport.authenticate("jwt", { session: false }),
@@ -154,7 +162,15 @@ app.get(
   }
 );
 
-// return data about a genre
+/**
+ * Route for returning data on all movies of a specified genre.
+ * @name GET /movies/genre/:genre
+ * @function
+ * @memberof module:server
+ * @param {string} genre - The name of the genre.
+ * @param {Object} req - Express request object.
+ * @param {Object} res - Express response object.
+ */
 app.get("/movies/genre/:genre", (req, res) => {
   Movies.find({ "Genre.Name": req.params.genre })
     .then((movies) => {
@@ -169,7 +185,15 @@ app.get("/movies/genre/:genre", (req, res) => {
     });
 });
 
-// return data about a director
+/**
+ * Route for returning data on all movies of a nominated director.
+ * @name GET /movies/director/:director
+ * @function
+ * @memberof module:server
+ * @param {string} director - The name of the director.
+ * @param {Object} req - Express request object.
+ * @param {Object} res - Express response object.
+ */
 app.get("/movies/director/:director", (req, res) => {
   Movies.findOne({ "Director.Name": req.params.director })
     .then((movie) => {
@@ -184,7 +208,14 @@ app.get("/movies/director/:director", (req, res) => {
     });
 });
 
-// return list of users
+/**
+ * Route for returning a list of users.
+ * @name GET /users
+ * @function
+ * @memberof module:server
+ * @param {Object} req - Express request object.
+ * @param {Object} res - Express response object.
+ */
 app.get("/users", (req, res) => {
   Users.find()
     .then((users) => {
@@ -196,7 +227,15 @@ app.get("/users", (req, res) => {
     });
 });
 
-// Retrive a list of user's list of favorites
+/**
+ * Route for retrieving the movie id's of a user's favorite movies
+ * @name GET /users/:Username/favoriteMovies
+ * @function
+ * @memberof module:server
+ * @param {string} Username - The username of the user.
+ * @param {Object} req - Express request object.
+ * @param {Object} res - Express response object.
+ */
 app.get(
   "/users/:Username/favoriteMovies",
   // passport.authenticate("jwt", { session: false })
@@ -216,7 +255,19 @@ app.get(
   }
 );
 
-// allow new users to register
+/**
+ * Route for allowing new users to register.
+ * Validates input fields such as username, password, and email.
+ * @name POST /users
+ * @function
+ * @memberof module:server
+ * @param {string} Username - The desired username for the new user.
+ * @param {string} Password - The password for the new user.
+ * @param {string} Email - The email address for the new user.
+ * @param {string} Birthday - The birthday of the new user (optional).
+ * @param {Object} req - Express request object.
+ * @param {Object} res - Express response object.
+ */
 app.post(
   "/users",
   [
@@ -266,7 +317,20 @@ app.post(
   }
 );
 
-// allow users to update their info
+/**
+ * Route for allowing users to update their information.
+ * Requires authentication using JWT.
+ * Validates input fields such as username, password, and email.
+ * @name PUT /users/:Username
+ * @function
+ * @memberof module:server
+ * @param {string} Username - The username of the user.
+ * @param {string} Password - The password of the user.
+ * @param {string} Email - The email of the user.
+ * @param {string} Birthday - The birthday of the user (optional).
+ * @param {Object} req - Express request object.
+ * @param {Object} res - Express response object.
+ */
 app.put(
   "/users/:Username",
   [
@@ -320,7 +384,17 @@ app.put(
   }
 );
 
-// allow users to add a movie to their favorite list
+/**
+ * Route for allowing users to add a movie to their favorite list.
+ * Requires authentication using JWT.
+ * @name POST /users/:Username/movies/:MovieID
+ * @function
+ * @memberof module:server
+ * @param {string} Username - The username of the user.
+ * @param {string} MovieID - The ID of the movie to be added to the user's favorite list.
+ * @param {Object} req - Express request object.
+ * @param {Object} res - Express response object.
+ */
 app.post(
   "/users/:Username/movies/:MovieID",
   passport.authenticate("jwt", { session: false }),
@@ -348,7 +422,16 @@ app.post(
   }
 );
 
-// delete a user from the database
+/**
+ * Route for deleting a user from the database.
+ * Requires authentication using JWT.
+ * @name DELETE /users/:Username
+ * @function
+ * @memberof module:server
+ * @param {string} Username - The username of the user to be deleted.
+ * @param {Object} req - Express request object.
+ * @param {Object} res - Express response object.
+ */
 app.delete(
   "/users/:Username",
   passport.authenticate("jwt", { session: false }),
@@ -368,7 +451,15 @@ app.delete(
   }
 );
 
-// remove a movie from the database
+/**
+ * Route for deleting a movie by its title.
+ * @name DELETE /movies/:Title
+ * @function
+ * @memberof module:server
+ * @param {string} Title - The title of the movie to be deleted.
+ * @param {Object} req - Express request object.
+ * @param {Object} res - Express response object.
+ */
 app.delete("/movies/:Title", async (req, res) => {
   Movies.findOneAndDelete({ Title: req.params.Title }).then((movie) => {
     if (!movie) {
@@ -379,8 +470,17 @@ app.delete("/movies/:Title", async (req, res) => {
   });
 });
 
-// allow users to remove a movie from their favorite list
-app.delete(
+/**
+ * Route for allowing users to remove a movie from their favorite list.
+ * Requires authentication using JWT.
+ * @name DELETE /users/:Username/movies/:MovieID
+ * @function
+ * @memberof module:server
+ * @param {string} Username - The username of the user.
+ * @param {string} MovieID - The ID of the movie to be removed from the user's favorite list.
+ * @param {Object} req - Express request object.
+ * @param {Object} res - Express response object.
+ */ app.delete(
   "/users/:Username/movies/:MovieID",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
@@ -406,13 +506,33 @@ app.delete(
   }
 );
 
+/**
+ * Error handling middleware to handle errors in the Express application.
+ * Logs the error stack trace and sends a 500 Internal Server Error response with a generic error message.
+ * @name Error Handling Middleware
+ * @function
+ * @memberof module:server
+ * @param {Error} err - The error object.
+ * @param {Object} req - Express request object.
+ * @param {Object} res - Express response object.
+ * @param {Function} next - The next middleware function in the stack.
+ */
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send("Something broke!");
 });
 
-// listen for requests
+/**
+ * Start the Express server and listen for incoming requests.
+ * If the environment variable PORT is not defined, default to port 8080.
+ * @name Listen for Requests
+ * @function
+ * @memberof module:server
+ * @param {number} port - The port number to listen on.
+ * @param {string} hostname - The hostname or IP address to bind to (optional).
+ * @param {Function} callback - Callback function to be executed once the server is listening.
+ */
 const port = process.env.PORT || 8080;
 app.listen(port, "0.0.0.0", () => {
-  console.log("Listening on Port " + port);
+  console.log("Listening on Port: " + port);
 });
