@@ -1,41 +1,65 @@
-// A server side programming framework that simplifies Node.js syntax, making it easier to write server-side code - used to create and maintain web servers as well as manage HTTP requests, rather than using modules
+/**
+ * A server-side programming framework that simplifies Node.js syntax, making it easier to write server-side code.
+ * Used to create and maintain web servers as well as manage HTTP requests, rather than using modules.
+ * @module server
+ */
 
-const express = require("express"),
-  bodyParser = require("body-parser"),
-  uuid = require("uuid"),
-  morgan = require("morgan"),
-  fs = require("fs"),
-  path = require("path"),
-  mongoose = require("mongoose"),
-  Models = require("./models.js");
+// Import required modules
+const express = require("express"); // Fast, unopinionated, minimalist web framework for Node.js
+const bodyParser = require("body-parser"); // Parse incoming request bodies
+const uuid = require("uuid"); // Generate unique IDs
+const morgan = require("morgan"); // HTTP request logger middleware for Node.js
+const fs = require("fs"); // File system module
+const path = require("path"); // Utility module for working with file and directory paths
+const mongoose = require("mongoose"); // MongoDB object modeling tool designed to work in an asynchronous environment
+const Models = require("./models.js"); // Custom module containing Mongoose models
 
+// Destructure models from the imported module
 const Movies = Models.Movie;
 const Users = Models.User;
 
+// Create an Express application
 const app = express();
 
+// Parse JSON request bodies
 app.use(bodyParser.json());
 
+// Enable CORS (Cross-Origin Resource Sharing)
 const cors = require("cors");
 app.use(cors());
 
+/**
+ * Import and configure authentication middleware.
+ * @see {@link module:auth}
+ */
 const auth = require("./auth")(app);
 // use of app here ensures Express is available in auth.js as well
 
+/**
+ * Import and configure passport for authentication.
+ * @see {@link https://passportjs.org/}
+ */
 const passport = require("passport");
 require("./passport");
 
+/**
+ * Import express-validator for input validation.
+ * @see {@link https://express-validator.github.io/docs/}
+ */
 const { check, validationResult } = require("express-validator");
 
+/**
+ * Create a write stream for logging access requests to a file.
+ * @see {@link https://nodejs.org/api/fs.html#fs_fs_createwritestream_path_options}
+ */
 const accessLogStream = fs.createWriteStream(path.join(__dirname, "log.txt"), {
   flags: "a",
 });
 
-// mongoose.connect("mongodb://127.0.0.1:27017/cfDB", {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true,
-// });
-
+/**
+ * Connect to the MongoDB database using Mongoose.
+ * @see {@link https://mongoosejs.com/}
+ */
 mongoose.connect(process.env.CONNECTION_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -44,21 +68,50 @@ mongoose.connect(process.env.CONNECTION_URI, {
 // Database
 const db = mongoose.connection;
 
+/**
+ * Event listener for MongoDB connection error.
+ * @event db#error
+ */
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
+
+/**
+ * Event listener for successful MongoDB connection.
+ * @event db#open
+ */
 db.once("open", () => {
   console.log("Connected to MongoDB!");
 });
 
+/**
+ * Use morgan middleware for logging HTTP requests to a file.
+ * @see {@link https://github.com/expressjs/morgan}
+ */
 app.use(morgan("combined", { stream: accessLogStream }));
 
-// app.use(express.static(path.join(___dirname, "public")));
-
-// GET requests
+/**
+ * Route for handling GET requests to the root endpoint.
+ * Displays a welcome message.
+ * @name GET /
+ * @function
+ * @memberof module:server
+ * @param {Object} req - Express request object.
+ * @param {Object} res - Express response object.
+ * @returns {Object} Express response object with a welcome message.
+ */
 app.get("/", (req, res) => {
   res.send("Welcome to my movie api");
 });
 
-// get documentation
+/**
+ * Route for handling GET requests to the /documentation endpoint.
+ * Displays the documentation HTML page.
+ * @name GET /documentation
+ * @function
+ * @memberof module:server
+ * @param {Object} req - Express request object.
+ * @param {Object} res - Express response object.
+ * @returns {Object} Express response object with the documentation HTML page.
+ */
 app.get("/documentation", (req, res) => {
   res.sendFile("/public/documentation.html", { root: __dirname });
 });
